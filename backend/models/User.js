@@ -4,12 +4,7 @@ const {isEmail} = require ('validator');
 const UserSchema = new mongoose.Schema (
     
         {
-            name:{
-                type:String,
-                required: true,
-                default:'nihal'
-            },
-
+            
             email:{
                 type:String,
                 required:[true, 'please enter an email'],
