@@ -9,7 +9,7 @@ const User = require('../models/User')
 module.exports.getOrder = async (req,res) => {
     let userId = req.params.id
 
-    order.findOne({userId}).sort({date : -1}).then(orders => res.json(orders))
+    Order.findOne({userId}).sort({date : -1}).then(orders => res.json(orders))
 }
 
 module.exports.checkout = async (req,res) => {

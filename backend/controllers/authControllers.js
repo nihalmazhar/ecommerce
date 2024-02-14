@@ -1,14 +1,16 @@
 const express = require("express");
 
 const app = express();
+app.use(express.json());
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const cookie = require("cookie-parser");
-app.use(express.urlencoded({extended:true}));
-app.use(express.json());
-app.use(cookie());
+
+app.use(express.urlencoded({ extended: true }));
+
 
 module.exports.signUp = async (req, res) => {
   const { email, password } = req.body;
@@ -33,6 +35,7 @@ module.exports.logIn = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     console.log(req.body);
+
     if (!user) {
       res.send("user doesnt exist");
       return;
@@ -43,9 +46,9 @@ module.exports.logIn = async (req, res) => {
     if (validpassword) {
       const token = jwt.sign(user.toJSON(), config.get("jwtsecret"));
       res.cookie("jwtoken", token, {
-        httpOnly: true,
+        httpOnly: false,
       });
-      res.send('successful')
+      res.send("successful");
     }
   } catch (error) {
     console.error(error);
@@ -54,7 +57,17 @@ module.exports.logIn = async (req, res) => {
 };
 
 module.exports.get_User = async (req, res) => {
-  User.findById(req.user.id)
-    .select("-password")
-    .then((user) => res.json(user));
+  
+  const userId = req.user._id;
+  console.log(userId);
+  try {
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };

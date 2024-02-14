@@ -24,7 +24,7 @@ function Footer() {
           <Link to="/" className="font-bold">
             ABOUT US
           </Link>
-          <Link to="/" className="font-bold">
+          <Link to="/contact" className="font-bold">
             CONTACT US
           </Link>
         </div>
@@ -76,7 +76,7 @@ function Footer() {
           <a href="/">Help</a>-<a href="/">SiteMap</a>
         </div>
         <div>
-          <p>All rights reserved © 2006-2023 OLX</p>
+          <p>All rights reserved © 2006-2023 PARTSBAY</p>
         </div>
       </footer>
     </>

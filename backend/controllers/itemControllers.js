@@ -11,13 +11,19 @@ module.exports.add_items = (req, res) => {
 }
 
 module.exports.edit_items = (req, res) => {
-    Item.findByIdAndUpdate({id:req.params.id })
-    .then(function(item) {Item.findOne({id:req.params.id})
-    .then(item => res.json(Item))})
+    const itemId = req.params.id;
+    const updateData = req.body;
+    Item.findByIdAndUpdate(itemId, updateData, { new: true })
+    .then(updatedItem => {
+        res.json(updatedItem);
+    })
+    // .then(function(item) {Item.findOne({id:req.params.id})
+    // .then(item => res.json(Item))})
 }
 
 module.exports.delete_items = (req, res) => {
-    Item.findByIdAndDelete({id:req.params.id})
+    const itemId = req.params.id;
+    Item.findByIdAndDelete(itemId)
     .then(function(item){
         res.json({success:true})
     })

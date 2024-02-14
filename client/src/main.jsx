@@ -5,6 +5,12 @@ import Home from "./pages/home.jsx";
 import Login from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Contact from "./pages/contact.jsx";
+import Cart from "./pages/cart.jsx";
+import WishList from "./pages/wishlist.jsx";
+import ProductList from "./pages/productlisting.jsx";
+import ProductDetails from "./pages/productdetails.jsx";
+import Checkout from "./pages/checkout.jsx";
+import Admin from "./pages/Admin.jsx";
 import "./index.css";
 import {
   Route,
@@ -12,18 +18,30 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Layout from "./layout.jsx";
+import Layout from "./Layouts/layout.jsx";
+import AuthLayout from "./Layouts/authLayout.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route path="" element={<App />} />
-      <Route path="home" element={<Home />} />
-      <Route path="login" element={<Login />}/>
-      <Route path="signup" element={<SignUp/>}/>
-      <Route path="contact" element={<Contact/>} />
+    <Route>
+      <Route path="/" element={<Layout />}>
+        <Route path="" element={<Home />} />
+        <Route path="home" element={<Home />} />
+        <Route path="product-list" element={<ProductList/>}/>
+        <Route path="product-details" element={<ProductDetails/>}/>
+        <Route path="cart" element={<Cart/>} />
+        <Route path="checkout" element={<Checkout/>} />
+        <Route path="wishlist" element={<WishList />} />
+        <Route path="contact" element={<Contact />} />
+        
+      </Route>
+      <Route path="/" element={<AuthLayout />}>
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="admin" element={<Admin />} />
+        
+      </Route>
     </Route>
-    
   )
 );
 

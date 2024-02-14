@@ -48,7 +48,7 @@ module.exports.addCartItems = async (req, res) => {
     } else {
       const newCart = await Cart.create({
         userId,
-        items: [{ productId, name, qauntity, price }],
+        items: [{ productId, name, quantity, price }],
         bill: quantity * price,
       });
       return res.send(newCart);

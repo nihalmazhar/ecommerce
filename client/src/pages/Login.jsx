@@ -1,7 +1,31 @@
 
-import React from "react"
-
+import React, { useState } from "react"
+import axios from "axios"
+import { Link } from "react-router-dom"
 export default function Login() {
+
+const [form,setForm] = useState({})
+const [data,setData] = useState({email:"",password:""})
+
+const handlechange = (e) =>{
+  const {id,value} = e.target;
+  setData((prev)=>({...prev,[id]:value}))
+}
+const  BaseUrl ="http://localhost:4000/api/login"
+
+const axiosinst = axios.create({
+  baseURL:BaseUrl,
+  withCredentials:true
+})
+
+const handlesubmit = (e) =>{
+  e.preventDefault()
+  axiosinst.post(BaseUrl,data,{withCredentials:true}).then((res)=>{
+    console.log(res);
+   })
+}
+
+console.log(data);
     return (
       <>
         {/*
@@ -25,7 +49,7 @@ export default function Login() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -33,6 +57,7 @@ export default function Login() {
                 <div className="mt-2">
                   <input
                     id="email"
+                    onChange={handlechange}
                     name="email"
                     type="email"
                     autoComplete="email"
@@ -56,6 +81,7 @@ export default function Login() {
                 <div className="mt-2">
                   <input
                     id="password"
+                    onChange={handlechange}
                     name="password"
                     type="password"
                     autoComplete="current-password"
@@ -67,6 +93,7 @@ export default function Login() {
   
               <div>
                 <button
+                onClick={handlesubmit}
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
@@ -77,9 +104,9 @@ export default function Login() {
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
-              <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              <Link to='/signup' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                 Sign Up
-              </a>
+              </Link>
             </p>
           </div>
         </div>
