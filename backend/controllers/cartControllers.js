@@ -9,7 +9,7 @@ module.exports.getCartItems = async (req, res) => {
     if (cart && cart.items.length > 0) {
       res.send(cart);
     } else {
-      res.send(null);
+      res.send('nothing found');
     }
   } catch (err) {
     console.log(err);
@@ -23,7 +23,7 @@ module.exports.addCartItems = async (req, res) => {
 
   try {
     let cart = await Cart.findOne({ userId });
-    let item = await Cart.findOne({ productId });
+    let item = await Item.findOne({ _id:productId });
 
     if (!item) {
       res.json("Item not found");
@@ -40,7 +40,10 @@ module.exports.addCartItems = async (req, res) => {
         productitem.quantity += quantity;
         cart.items[itemindex] = productitem;
       } else {
-        cart.items.push(productId, quantity, price);
+        try{
+          console.log(productId,quantity,price);
+          cart.items.push({productId:productId, name , quantity:quantity, price:price});}
+        catch (err){console.log(err , "failure")}
       }
       cart.bill += quantity * price;
       cart = await cart.save();
@@ -60,14 +63,15 @@ module.exports.addCartItems = async (req, res) => {
 
 module.exports.deleteCartItems = async (req, res) => {
   const userId = req.params.id;
-  const itemId = req.params.productId;
+  const productId = req.body.productId;
 
   try {
     let cart = await Cart.findOne({ userId });
     let itemindex = cart.items.findIndex((p) => p.productId == productId);
     if (itemindex > -1) {
       let productitem = cart.items[itemindex];
-      cart.bill = productitem.quantity * productitem.price;
+      console.log(productitem)
+      cart.bill -= productitem.quantity * productitem.price;
       cart.items.splice(itemindex, 1);
     }
 

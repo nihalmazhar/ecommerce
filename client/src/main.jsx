@@ -10,7 +10,8 @@ import WishList from "./pages/wishlist.jsx";
 import ProductList from "./pages/productlisting.jsx";
 import ProductDetails from "./pages/productdetails.jsx";
 import Checkout from "./pages/checkout.jsx";
-import Admin from "./pages/Admin.jsx";
+import Admin from "./pages/admin.jsx";
+import ProductAdd from "./pages/AddProduct.jsx";
 import "./index.css";
 import {
   Route,
@@ -28,18 +29,25 @@ const router = createBrowserRouter(
         <Route path="" element={<Home />} />
         <Route path="home" element={<Home />} />
         <Route path="product-list" element={<ProductList/>}/>
-        <Route path="product-details" element={<ProductDetails/>}/>
+        <Route path="product-details/:itemId" element={<ProductDetails/>}/>
         <Route path="cart" element={<Cart/>} />
         <Route path="checkout" element={<Checkout/>} />
         <Route path="wishlist" element={<WishList />} />
         <Route path="contact" element={<Contact />} />
         
       </Route>
+
+
       <Route path="/" element={<AuthLayout />}>
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="admin" element={<Admin />} />
-        
+      </Route>
+      
+      <Route path="/" >
+          <Route path="admin" element={<Admin/>}/>
+            <Route path="addproduct" element={<ProductAdd/>}/>
+          <Route/>
       </Route>
     </Route>
   )

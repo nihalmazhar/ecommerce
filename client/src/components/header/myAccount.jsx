@@ -20,7 +20,7 @@ function MyAccount() {
   return (
     <>
       <div
-        className="menu"
+        className="menu font-montserrat font-semibold text-blue-700"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -29,7 +29,7 @@ function MyAccount() {
           style={{ color: "#1E40AF" }}
           className="fa-xl"
         />{" "}
-        MY ACCOUNT
+        My Account
         <div className="absolute z-10 bg-blue-100 w-32 border-2 rounded ">{isDropdownVisible && <MyAccountDropdown />}</div>
       </div>
     </>

@@ -3,13 +3,13 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import Slider from 'react-slick'
 import './slider.css'
-import { slideimages } from './slideimages';
+
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-function imageSlider() {
+function imageSlider({slideimages}) {
     const [nav1, setNav1] = useState(null);
     const [currentSlide, setCurrentSlide] = useState(0)
     const [slider1, setSlider1] = useState(null);
@@ -38,7 +38,7 @@ function imageSlider() {
     <div className='slidercontainer'>
          <Slider {...settings} asNavFor={nav1}
             ref={(slider) => setSlider1(slider)}>
-                {slideimages.map(slides => <div className='img-body' key={slides.id}> <img src={slides.src}/> </div>)}
+                {slideimages.map(slides => <div className='img-body' key={slides.id}> <img src={slides}/> </div>)}
         
         </Slider>
       <div className="thumb-wrapper">
@@ -49,7 +49,7 @@ function imageSlider() {
               onClick={() => {
                 slider1?.slickGoTo(idx)
               }}>
-              <img src={item.src} />
+              <img src={item} />
               
             </div>
           ))}

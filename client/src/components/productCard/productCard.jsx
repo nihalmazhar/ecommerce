@@ -2,22 +2,22 @@ import React from "react";
 
 
 
-function productCard() {
+function productCard({firstImage,productName,price,brand,partNumber}) {
   return (
     <>
     <div className="w-[25vw] p-4 m-2 ">
-      <div className="">
-        <img src="/src/assets/productImages/timing belt.png"/>
+      <div className="bg-gray-300">
+        <img src={firstImage}/>
       </div>
-      <div>
-        Timing belt
+      <div className="text-lg font-medium">
+        {productName}
       </div>
-      <div>
-      ₹100
+      <div className="font-semibold text-xl text-blue-900">
+      ₹{price}
       </div>
       <div className="flex justify-between">
-        <div>Bosch</div>
-        <div>PL3-TBR</div>
+        <div className=" text-gray-600 text-opacity-60">{brand}</div>
+        <div className=" text-gray-600 text-opacity-60" >{partNumber}</div>
       </div>
       
     </div>

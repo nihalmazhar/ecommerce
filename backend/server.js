@@ -5,6 +5,7 @@ const config = require('config');
 const dotenv = require('dotenv');
 const app = express();
 const cors = require('cors')
+app.use(cors())
 app.use(express.json());
 dotenv.config();
 
@@ -13,11 +14,12 @@ const authRouter = require('./routes/auth.js')
 const itemRouter = require('./routes/item.js')
 const cartRouter = require('./routes/cart.js')
 const orderRouter = require('./routes/order.js')
-app.use(cors())
+const wishlistRouter = require('./routes/wishlist.js')
 app.use('/api', authRouter)
 app.use('/api', itemRouter)
 app.use('/api', cartRouter)
 app.use('/api', orderRouter)
+app.use('/api', wishlistRouter)
 
 app.get('/', (req,res) => {res.send('This is homepage')});
 

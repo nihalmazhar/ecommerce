@@ -10,7 +10,7 @@ function wishlist() {
       <div>
         <div className="mx-6 w-[25vw] border-gray-600 border rounded-lg">
           
-          <ProductCard/>
+          <ProductCard />
           <div className="flex mx-2 ">
             <AddToCartButton/><DeleteButton/>
           </div>

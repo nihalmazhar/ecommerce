@@ -10,6 +10,7 @@ export default {
       }
     },
     fontFamily: {
+      montserrat:["montserrat"],
       'body': [
     'Inter', 
     'ui-sans-serif', 

@@ -8,6 +8,7 @@ module.exports.get_items = (req,res) => {
 module.exports.add_items = (req, res) => {
     const newItem = new Item (req.body);
     newItem.save().then(item => res.json(item))
+    
 }
 
 module.exports.edit_items = (req, res) => {

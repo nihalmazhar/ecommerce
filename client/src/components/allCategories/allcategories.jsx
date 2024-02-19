@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 function Allcategories() {
+
+ 
   return (
     <>
       <div className="flex justify-evenly flex-wrap my-10">

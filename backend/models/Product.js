@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [{ src: { type: String } }],
+  images: [ { type: String } ],
 
   seller:{
     type:String
@@ -30,6 +30,9 @@ const productSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+
+  partNumber:{type:String,
+    required:true},
 
   date_added: {
     type: Date,
