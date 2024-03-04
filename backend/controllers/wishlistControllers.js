@@ -35,6 +35,9 @@ module.exports.addListItems = async (req,res) => {
 
         let price = item.price;
         let name = item.name;
+        const brand = item.brand;
+    const partNumber = item.partNumber;
+    const image = item.images[0];
         if (wishlist){
             itemIndex = wishlist.items.findIndex((p) => p.productId == productId)
         
@@ -43,7 +46,7 @@ module.exports.addListItems = async (req,res) => {
             wishlist.items[itemIndex] = productItem
         }
         else{
-            wishlist.items.push({productId, name, price})
+            wishlist.items.push({productId, name, price, brand, partNumber, image})
         }
         
 

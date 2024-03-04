@@ -6,8 +6,8 @@ function Allcategories() {
   return (
     <>
       <div className="flex justify-evenly flex-wrap my-10">
-        <Link to="/">
-          <div className="w-[17vw] h-[40vh] flex flex-col text-center justify-center items-center border-4 p-8 m-2">
+        <Link to="product-list/Maintenance Service Parts">
+          <div className="w-[17vw] h-[40vh] flex flex-col text-center justify-center items-center border-4 rounded -4 shadow-lg p-8 m-2">
             <img className='mb-3 w-[8rem] h-[8rem]' src="./src/assets/categoryIcons/maintenance service parts.svg" />
             Maintenance Service Parts
           </div>

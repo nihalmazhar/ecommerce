@@ -19,6 +19,17 @@ const cartSchema = new mongoose.Schema(
                     required: true,
                     ref:"item",
                 },
+                image: {
+                    type:String
+                },
+
+                partNumber: {
+                    type:String
+                },
+
+                brand: {
+                    type:String
+                },
 
                 quantity: {
                     type: Number,

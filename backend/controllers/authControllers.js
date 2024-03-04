@@ -34,10 +34,10 @@ module.exports.logIn = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    console.log(req.body);
+    
 
     if (!user) {
-      res.send("user doesnt exist");
+      res.status(404).json({message:"user doesnt exist"});
       return;
     }
 
@@ -45,11 +45,10 @@ module.exports.logIn = async (req, res) => {
 
     if (validpassword) {
       const token = jwt.sign(user.toJSON(), config.get("jwtsecret"));
-      res.cookie("jwtoken", token, {
-        httpOnly: false,
-      });
-      res.send("successful");
+      
+      res.json({token})
     }
+    else res.status(400).json({message:"invalid credentials"})
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -59,7 +58,7 @@ module.exports.logIn = async (req, res) => {
 module.exports.get_User = async (req, res) => {
   
   const userId = req.user._id;
-  console.log(userId);
+  
   try {
     const user = await User.findById(userId).select("-password");
     if (!user) {

@@ -8,8 +8,10 @@ import Contact from "./pages/contact.jsx";
 import Cart from "./pages/cart.jsx";
 import WishList from "./pages/wishlist.jsx";
 import ProductList from "./pages/productlisting.jsx";
+import ProductlistingFilter from "./pages/productlisting-filter.jsx";
 import ProductDetails from "./pages/productdetails.jsx";
-import Checkout from "./pages/checkout.jsx";
+
+import CheckoutSuccess from "./pages/checkoutSuccess.jsx";
 import Admin from "./pages/admin.jsx";
 import ProductAdd from "./pages/AddProduct.jsx";
 import "./index.css";
@@ -29,11 +31,13 @@ const router = createBrowserRouter(
         <Route path="" element={<Home />} />
         <Route path="home" element={<Home />} />
         <Route path="product-list" element={<ProductList/>}/>
+        <Route path="product-list/:category" element={<ProductlistingFilter/>}/>
         <Route path="product-details/:itemId" element={<ProductDetails/>}/>
-        <Route path="cart" element={<Cart/>} />
-        <Route path="checkout" element={<Checkout/>} />
-        <Route path="wishlist" element={<WishList />} />
+        <Route path="cart/:userID" element={<Cart/>} />
+       
+        <Route path="wishlist/:userID" element={<WishList />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="success" element={<CheckoutSuccess/>} />
         
       </Route>
 

@@ -15,27 +15,26 @@ const  BaseUrl ="http://localhost:4000/api/login"
 
 const axiosinst = axios.create({
   baseURL:BaseUrl,
-  withCredentials:true
+  withCredentials : true 
 })
 
 const handlesubmit = (e) =>{
   e.preventDefault()
   axiosinst.post(BaseUrl,data,{withCredentials:true}).then((res)=>{
     console.log(res);
+
+    const token = res.data.token;
+
+    localStorage.setItem('token', token);
    })
 }
+
+
 
 console.log(data);
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
+        
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img

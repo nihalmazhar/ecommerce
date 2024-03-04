@@ -1,5 +1,6 @@
 {
     "dbURI" : "mongodb://127.0.0.1:27017/ecommerce",
     "jwtsecret" : "your jwt secret",
-    "StripeAPIKey" : "my stripe api key"
+    "StripeAPIKey" : "sk_test_51Onx6ISCX6v5XA2gCZyTeIWhwxBvGmxDnhJVWF3UlsAY4cmugW8eDzQ7gpAHXBchDbFLztdRPF3DAQKkzPn2UwLy00LDoCt1kT",
+    "StripePublicKey": "pk_test_51Onx6ISCX6v5XA2gDl8bAPgfB6Cf7h0ghBATG7DRdPoyA5fPwvjpWvrRWoTDE6Mylkl0adEsdXZvCUWcGeLqEWp200bo1vMOjS"
 }

@@ -31,7 +31,9 @@ module.exports.addCartItems = async (req, res) => {
 
     const name = item.name;
     const price = item.price;
-
+    const brand = item.brand;
+    const partNumber = item.partNumber;
+    const image = item.images[0];
     if (cart) {
       let itemindex = cart.items.findIndex((p) => p.productId == productId);
 
@@ -42,7 +44,7 @@ module.exports.addCartItems = async (req, res) => {
       } else {
         try{
           console.log(productId,quantity,price);
-          cart.items.push({productId:productId, name , quantity:quantity, price:price});}
+          cart.items.push({productId:productId, name , quantity:quantity, price:price, brand, partNumber, image});}
         catch (err){console.log(err , "failure")}
       }
       cart.bill += quantity * price;

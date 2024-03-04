@@ -19,7 +19,17 @@ const wishlistSchema = new mongoose.Schema(
                     required: true,
                     ref:"item",
                 },
+                image: {
+                    type:String
+                },
 
+                partNumber: {
+                    type:String
+                },
+
+                brand: {
+                    type:String
+                },
                 price: {
                     type: Number,
                     required: true,
