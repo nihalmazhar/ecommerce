@@ -7,7 +7,7 @@ const User = require("../models/User");
 module.exports.getOrder = async (req, res) => {
   let userId = req.params.id;
 
-  Order.findOne({ userId })
+  Order.find({ userId })
     .sort({ date: -1 })
     .then((orders) => res.json(orders));
 };

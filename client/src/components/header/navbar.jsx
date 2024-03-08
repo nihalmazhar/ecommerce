@@ -3,7 +3,6 @@ import SearchBar from "./searchBar";
 import WishList from "./wishList";
 import Cart from "./cart";
 import MyAccount from "./myAccount";
-import HamMenu from "./hamMenu";
 import { Link } from "react-router-dom";
 import axios from "axios";
 function Navbar() {
@@ -58,7 +57,7 @@ function Navbar() {
             <Cart />
           </Link>
           <MyAccount />
-          <HamMenu />
+          
         </div>
       </nav>
     </div>

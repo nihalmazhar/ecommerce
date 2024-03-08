@@ -28,12 +28,13 @@ fetchWishlist()
 
 const ListItems = myWishlist.items;
   return (
-    <div>
-      <div>WishList</div>
-      <div className="flex ">
-        {myWishlist.items && myWishlist.items.map((itemlist) =><div className="mx-6 w-[25vw] shadow-lg rounded-lg">
+    <div className="max-w-[80vw] flex flex-col items-center  mx-[10vw]">
+      <div className="m-6 px-2 rounded-sm font-semibold text-3xl bg-blue-300 text-blue-800 w-[80vw] ">Wish List</div>
+      <div className="flex flex-wrap ">
+        {myWishlist.items && myWishlist.items.map((itemlist) =><div key={itemlist._id} className="mx-2 my-4 mb-6 max-w-[25vw] shadow-lg rounded-lg">
           
           <ProductCard  
+          productId={itemlist.productId}
           firstImage={itemlist.image}
           productName={itemlist.name}
           price={itemlist.price}
@@ -41,7 +42,13 @@ const ListItems = myWishlist.items;
           partNumber={itemlist.partNumber}
           />
           <div className="flex justify-between mx-2 ">
-            <AddToCartButton/><DeleteButton/>
+            <AddToCartButton 
+            productId={itemlist.productId}
+            userID={userID}
+            /><DeleteButton
+            userID={userID}
+            productId={itemlist.productId}
+            />
           </div>
         </div>)}
       </div>

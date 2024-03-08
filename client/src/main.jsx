@@ -10,10 +10,11 @@ import WishList from "./pages/wishlist.jsx";
 import ProductList from "./pages/productlisting.jsx";
 import ProductlistingFilter from "./pages/productlisting-filter.jsx";
 import ProductDetails from "./pages/productdetails.jsx";
-
+import Orders from "./pages/orders.jsx";
 import CheckoutSuccess from "./pages/checkoutSuccess.jsx";
 import Admin from "./pages/admin.jsx";
 import ProductAdd from "./pages/AddProduct.jsx";
+import MyAccount from "./pages/MyAccount.jsx";
 import "./index.css";
 import {
   Route,
@@ -34,10 +35,11 @@ const router = createBrowserRouter(
         <Route path="product-list/:category" element={<ProductlistingFilter/>}/>
         <Route path="product-details/:itemId" element={<ProductDetails/>}/>
         <Route path="cart/:userID" element={<Cart/>} />
-       
+        <Route path="orders/:userID" element={<Orders/>} />
         <Route path="wishlist/:userID" element={<WishList />} />
         <Route path="contact" element={<Contact />} />
         <Route path="success" element={<CheckoutSuccess/>} />
+        <Route path="account/:userID" element={<MyAccount/>} />
         
       </Route>
 

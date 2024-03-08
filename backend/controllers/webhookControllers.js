@@ -36,6 +36,9 @@ module.exports.webhook = async (request, response) => {
 
       const order = await Order.create({
         userId: checkoutData.metadata.userId,
+        name: checkoutData.customer_details.name,
+        email: checkoutData.customer_details.email,
+        phoneNumber: checkoutData.customer_details.phone,
         items: cart.items,
         bill: checkoutData.amount_total / 100,
         subtotal: checkoutData.amount_subtotal / 100,

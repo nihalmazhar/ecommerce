@@ -1,8 +1,15 @@
 import React from 'react'
+import axios from 'axios'
 
-function addToCartButton() {
+
+function addToCartButton({productId, userID}) {
+
+  const addToCart = async() => {
+    const response = await axios.post(`http://localhost:4000/api/cart/${userID}`, { productId, quantity: 1 })
+    const recieved = response.data
+  }
   return (
-    <div><button type="button" className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-40">Add to Cart</button></div>
+    <button type="button" onClick={addToCart} className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  w-40">Add to Cart</button>
   )
 }
 

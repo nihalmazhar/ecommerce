@@ -39,9 +39,10 @@ function productlistingFilter() {
             { selectedProduct && selectedProduct.map((item) => {
               
               return(
-                <Link key={item._id} to={`/product-details/${item._id}`} >
+                
                   <div className="mx-6 my-6 w-[25vw] border-gray-600 border rounded-lg">
                               <ProductCard
+                              productId={item._id}
                               firstImage = {item.images[0]}
                               productName = {item.name}
                               price = {item.price}
@@ -49,7 +50,7 @@ function productlistingFilter() {
                               partNumber = {item.partNumber}
                                />
                                </div>
-                </Link>
+                
              )})}
         
         

@@ -22,6 +22,7 @@ module.exports.getListItems = async (req, res) => {
 }
 
 module.exports.addListItems = async (req,res) => {
+   
     const userId = req.params.id;
     const productId = req.body.productId;
 
@@ -71,12 +72,17 @@ module.exports.addListItems = async (req,res) => {
 
 
 module.exports.deleteListItems = async (req, res) => {
+
+    console.log(req.body)
     const userId = req.params.id;
     const productId = req.body.productId;
-  
+    console.log(userId, productId)
     try {
       let wishlist = await Wishlist.findOne({ userId });
+      console.log(wishlist)
       let itemindex = wishlist.items.findIndex((p) => p.productId == productId);
+
+      console.log( itemindex)
       if (itemindex > -1) {
         let productitem = wishlist.items[itemindex];
         console.log(productitem)
