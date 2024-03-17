@@ -46,7 +46,7 @@ module.exports.logIn = async (req, res) => {
     if (validpassword) {
       const token = jwt.sign(user.toJSON(), config.get("jwtsecret"));
       
-      res.json({token})
+      res.json({token, message: 'login successful'})
     }
     else res.status(400).json({message:"invalid credentials"})
   } catch (error) {

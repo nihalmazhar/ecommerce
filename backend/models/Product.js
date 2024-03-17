@@ -30,7 +30,8 @@ const productSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-
+  origin:{type:String},
+  
   partNumber:{type:String,
     required:true},
 

@@ -12,7 +12,7 @@ function BrandSlider() {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings} className="my-3 mx-5 h-20">
+    <Slider {...settings} className="my-3  h-20">
       <div>
         <img src="./src/assets/BrandImages/bosch.webp" alt="" />
       </div>

@@ -4,7 +4,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import FavoriteButton from "../components/favoriteButton";
 import ImageSlider from "../components/ProductSlider/ProductSlider";
-
+import Delivery from "../components/Delivery";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 function productdetails() {
@@ -56,14 +58,25 @@ function productdetails() {
   const selectedProduct = product.find((item) => item._id === itemId);
 
   const addToCart = async () => {
+    try{
     const response = await axios.post(
       `http://localhost:4000/api/cart/65b22d061092dc4cb467558d`,
       { productId: itemId, quantity: 1 }
     );
     console.log(response.data);
+    toast.info('Added to cart Successfully')}
+
+    catch (err){
+      console.log(err)
+      toast.error('Failed to add product to cart')
+    }
   };
   return (
     <div className="flex mx-6 my-6">
+      <ToastContainer 
+      position="bottom-center"
+      autoClose={2500}
+       />
       {selectedProduct && (
         <div className="left mb-8">
           <ImageSlider slideimages={selectedProduct.images} />
@@ -81,6 +94,7 @@ function productdetails() {
                 productId={itemId}
                 userId="65b22d061092dc4cb467558d"
               />
+              
             </div>
           </div>
           <div className="text-gray-600 ">Brand : {selectedProduct.brand}</div>
@@ -107,6 +121,7 @@ function productdetails() {
             </h3>
             {selectedProduct.description}
           </div>
+          <div><Delivery/></div>
           <div className="flex justify-center">
             <button
               type="button"

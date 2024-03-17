@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Counter from "../components/Counter";
 const userID = "65b22d061092dc4cb467558d";
+import { ToastContainer, toast } from "react-toastify";
 
 function cart() {
   const [myCart, setMyCart] = useState([]);
@@ -39,6 +40,7 @@ function cart() {
       );
 
       fetchCart();
+        toast.info('Item removed from Cart')
     } catch (err) {console.log(err)}
   };
 
@@ -60,6 +62,8 @@ function cart() {
   } else {
     return (
       <>
+      <ToastContainer position="bottom-center"
+      autoClose={2500}/>
         <div className="m-4">
           <div className="flex justify-between">
             <div className="text-3xl font-semibold">My Cart</div>

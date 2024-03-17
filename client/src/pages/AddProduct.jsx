@@ -1,10 +1,17 @@
 import React from 'react'
 import {useForm} from 'react-hook-form';
 import axios from 'axios';
+import Select from 'react-select';
 function productAdd() {
   const baseURL = 'http://localhost:4000/api/items';
 
   const {register, handleSubmit, formState:{errors}} = useForm();
+
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
 
   const onSubmit = (data) => 
   {axios.post(baseURL, data)
@@ -25,7 +32,7 @@ function productAdd() {
       </div>
       <div>
       <label name='cateogry' className='block'>Category*</label>
-      <input type='text' name='category' id='category' {...register('category')} placeholder='Enter Product category' required/>
+      <Select type='text' name='category' id='category' options={options}{...register('category')} placeholder='Enter Product category' required/>
       </div>
       <div>
       <label name='description' className='block'>Description*</label>
@@ -56,6 +63,10 @@ function productAdd() {
       <div>
       <label name='brand' className='block'>Brand*</label>
       <input type='text' name='brand' id='brand' {...register('brand')} placeholder='Enter Product Brand'required/>
+      </div>
+      <div>
+      <label name='origin' className='block'>Origin*</label>
+      <input type='text' name='origin' id='origin' {...register('origin')} placeholder='Enter Product Origin'required/>
       </div>
       <div>
       <label name='partNumber' className='block'>Part Number*</label>

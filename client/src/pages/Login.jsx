@@ -1,9 +1,10 @@
 
 import React, { useState } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 export default function Login() {
 
+  const navigate = useNavigate();
 const [form,setForm] = useState({})
 const [data,setData] = useState({email:"",password:""})
 
@@ -22,16 +23,19 @@ const handlesubmit = (e) =>{
   e.preventDefault()
   axiosinst.post(BaseUrl,data,{withCredentials:true}).then((res)=>{
     console.log(res);
-
+    console.log(res.data.message)
     const token = res.data.token;
 
     localStorage.setItem('token', token);
+    navigate("/home");
+
    })
 }
 
 
 
 console.log(data);
+
     return (
       <>
         

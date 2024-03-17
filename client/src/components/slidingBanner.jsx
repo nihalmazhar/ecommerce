@@ -12,7 +12,7 @@ export default function SimpleSlider() {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings} className="mt-2">
+    <Slider {...settings} className="">
       <div className="bg-red-900 w-screen h-[40vh]">
         <h3>1</h3>
       </div>

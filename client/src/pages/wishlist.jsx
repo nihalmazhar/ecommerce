@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductCard from "../components/productCard/productCard";
 import AddToCartButton from "../components/addToCartButton";
 import DeleteButton from "../components/deleteButton";
+import { ToastContainer } from "react-toastify";
 function wishlist() {
   const userID = '65b22d061092dc4cb467558d'
 
@@ -13,24 +14,39 @@ function wishlist() {
 
   const [myWishlist, setMyWishlist] = useState([]);
 
+  const fetchWishlist = async() => {
+    const response = await axios.get(`http://localhost:4000/api/wishlist/${userID}`);
+    const product = response.data;
+    
+    
+    setMyWishlist(product)
+    
+    }
+
 useEffect(() =>{
-const fetchWishlist = async() => {
-const response = await axios.get(`http://localhost:4000/api/wishlist/${userID}`);
-const product = response.data;
-console.log(response)
-console.log(product);
-setMyWishlist(product)
-
-}
-
 fetchWishlist()
 }, [])
 
-const ListItems = myWishlist.items;
+const handleWishlistChange = () => {
+  fetchWishlist(); // Refresh wishlist
+};
+
+console.log(myWishlist)
+if (myWishlist == "Nothing Found") {
+  return (
+    <div className="h-80 flex justify-center items-center text-red-800 text-3xl font-semibold">
+      {" "}
+      Your Wish list is Empty{" "}
+    </div>
+  )
+} else {
+
   return (
     <div className="max-w-[80vw] flex flex-col items-center  mx-[10vw]">
+      <ToastContainer position="bottom-center"
+      autoClose={2500}/>
       <div className="m-6 px-2 rounded-sm font-semibold text-3xl bg-blue-300 text-blue-800 w-[80vw] ">Wish List</div>
-      <div className="flex flex-wrap ">
+      <div className="flex flex-wrap w-[80vw]">
         {myWishlist.items && myWishlist.items.map((itemlist) =><div key={itemlist._id} className="mx-2 my-4 mb-6 max-w-[25vw] shadow-lg rounded-lg">
           
           <ProductCard  
@@ -48,12 +64,13 @@ const ListItems = myWishlist.items;
             /><DeleteButton
             userID={userID}
             productId={itemlist.productId}
+            onWishlistChange={handleWishlistChange}
             />
           </div>
         </div>)}
       </div>
     </div>
-  )
+  )}
 }
 
 export default wishlist

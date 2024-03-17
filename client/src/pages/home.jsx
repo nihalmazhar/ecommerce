@@ -8,6 +8,7 @@ function home() {
   return (
     <>
     <SimpleSlider/>
+   
     <Allcategories/>
     <BrandSlider/>
     </>

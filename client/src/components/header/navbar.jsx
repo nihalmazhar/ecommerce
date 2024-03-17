@@ -3,6 +3,7 @@ import SearchBar from "./searchBar";
 import WishList from "./wishList";
 import Cart from "./cart";
 import MyAccount from "./myAccount";
+import LoginSignup from "./LoginSignup";
 import { Link } from "react-router-dom";
 import axios from "axios";
 function Navbar() {
@@ -12,12 +13,11 @@ function Navbar() {
   const userid = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      // Handle case where token is not present
+     
       console.error("Token not found in local storage");
       return;
     }
 
-    // Set the Authorization header with the bearer token
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -25,18 +25,19 @@ function Navbar() {
     };
 
     try
-    {const userresponse = await axios.get(
+    {const response = await axios.get(
       "http://localhost:4000/api/user",
       config
     );
     
-    const userr = userresponse.data._id;
-    setUserID(userr)}
+    const userResponse = response.data._id;
+    setUserID(userResponse)}
     
     catch(err) {console.log(err)}
   };
 
-  userid();
+  useEffect(()=> {userid()}, [])
+  
 
   return (
     <div className="flex">
@@ -56,7 +57,9 @@ function Navbar() {
           <Link to={`/cart/${userID}`}>
             <Cart />
           </Link>
-          <MyAccount />
+          <div>
+            {userID ? <MyAccount /> : <LoginSignup/>}
+          </div>
           
         </div>
       </nav>
