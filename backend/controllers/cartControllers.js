@@ -3,7 +3,7 @@ const Item = require("../models/Product");
 
 module.exports.getCartItems = async (req, res) => {
   const userId = req.params.id;
-
+  console.log(userId)
   try {
     let cart = await Cart.findOne({ userId });
     // if (!cart) {res.send('nothing is found')};
@@ -20,6 +20,7 @@ module.exports.getCartItems = async (req, res) => {
 
 module.exports.addCartItems = async (req, res) => {
   const userId = req.params.id;
+  console.log('userId', userId)
   const { productId, quantity } = req.body;
 
   try {

@@ -20,6 +20,7 @@ const itemRouter = require('./routes/item.js')
 const cartRouter = require('./routes/cart.js')
 const orderRouter = require('./routes/order.js')
 const wishlistRouter = require('./routes/wishlist.js')
+const adminRouter = require('./routes/adminRoute.js')
 
 const webhookRouter = require('./routes/webhookRoute.js')
 app.use(express.raw())
@@ -32,7 +33,7 @@ app.use('/api', itemRouter)
 app.use('/api', cartRouter)
 app.use('/api', orderRouter)
 app.use('/api', wishlistRouter)
-
+app.use('/api', adminRouter)
 
 
 app.get('/', (req,res) => {res.send('This is homepage')});

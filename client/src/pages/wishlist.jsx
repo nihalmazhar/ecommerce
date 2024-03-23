@@ -1,76 +1,87 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import ProductCard from "../components/productCard/productCard";
 import AddToCartButton from "../components/addToCartButton";
 import DeleteButton from "../components/deleteButton";
 import { ToastContainer } from "react-toastify";
+import UserContext from "../Context/UserContext";
+
 function wishlist() {
-  const userID = '65b22d061092dc4cb467558d'
-
-
-
-
+  const { user } = useContext(UserContext);
+  const userID = user;
+  if (!user) return <div>Loading</div>;
 
   const [myWishlist, setMyWishlist] = useState([]);
 
-  const fetchWishlist = async() => {
-    const response = await axios.get(`http://localhost:4000/api/wishlist/${userID}`);
+  const fetchWishlist = async () => {
+    const response = await axios.get(
+      `http://localhost:4000/api/wishlist/${userID}`
+    );
     const product = response.data;
-    
-    
-    setMyWishlist(product)
-    
-    }
 
-useEffect(() =>{
-fetchWishlist()
-}, [])
+    setMyWishlist(product);
+  };
 
-const handleWishlistChange = () => {
-  fetchWishlist(); // Refresh wishlist
-};
+  useEffect(() => {
+    fetchWishlist();
+  }, []);
 
-console.log(myWishlist)
-if (myWishlist == "Nothing Found") {
-  return (
-    <div className="h-80 flex justify-center items-center text-red-800 text-3xl font-semibold">
-      {" "}
-      Your Wish list is Empty{" "}
-    </div>
-  )
-} else {
+  const handleWishlistChange = () => {
+    fetchWishlist(); // Refresh wishlist
+  };
 
-  return (
-    <div className="max-w-[80vw] flex flex-col items-center  mx-[10vw]">
-      <ToastContainer position="bottom-center"
-      autoClose={2500}/>
-      <div className="m-6 px-2 rounded-sm font-semibold text-3xl bg-blue-300 text-blue-800 w-[80vw] ">Wish List</div>
-      <div className="flex flex-wrap w-[80vw]">
-        {myWishlist.items && myWishlist.items.map((itemlist) =><div key={itemlist._id} className="mx-2 my-4 mb-6 max-w-[25vw] shadow-lg rounded-lg">
-          
-          <ProductCard  
-          productId={itemlist.productId}
-          firstImage={itemlist.image}
-          productName={itemlist.name}
-          price={itemlist.price}
-          brand={itemlist.brand}
-          partNumber={itemlist.partNumber}
-          />
-          <div className="flex justify-between mx-2 ">
-            <AddToCartButton 
-            productId={itemlist.productId}
-            userID={userID}
-            /><DeleteButton
-            userID={userID}
-            productId={itemlist.productId}
-            onWishlistChange={handleWishlistChange}
-            />
-          </div>
-        </div>)}
+  console.log(myWishlist);
+  if (myWishlist == "Nothing Found") {
+    return (
+      <div className="h-80 flex justify-center items-center text-red-800 text-3xl font-semibold">
+        {" "}
+        Your Wish list is Empty{" "}
       </div>
-    </div>
-  )}
+    );
+  } else {
+    return (
+      <div className="max-w-[80vw] flex flex-col items-center  mx-[10vw]">
+        <ToastContainer position="bottom-center" autoClose={2500} />
+        <div className="m-6 px-2 rounded-sm font-semibold text-3xl bg-blue-300 text-blue-800 w-[80vw] ">
+          Wish List
+        </div>
+        <div className="flex flex-wrap w-[80vw]">
+          {myWishlist.items &&
+            myWishlist.items.map((itemlist) => (
+              <div
+                key={itemlist._id}
+                className="mx-2 my-4 mb-6 max-w-[25vw] shadow-lg rounded-lg"
+              >
+                <ProductCard
+                  productId={itemlist.productId}
+                  firstImage={itemlist.image}
+                  productName={itemlist.name}
+                  price={itemlist.price}
+                  brand={itemlist.brand}
+                  partNumber={itemlist.partNumber}
+                />
+                <div className="flex justify-between mx-2 ">
+                  <div className="w-40 mb-2">
+                    <AddToCartButton
+                      productId={itemlist.productId}
+                      userID={userID}
+                    />
+                  </div>
+                  <div className="w-40 mb-2">
+                    <DeleteButton
+                      userID={userID}
+                      productId={itemlist.productId}
+                      onWishlistChange={handleWishlistChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+    );
+  }
 }
 
-export default wishlist
+export default wishlist;

@@ -1,22 +1,21 @@
-import React, { useState , useEffect} from 'react'
-import ProductCard from '../components/productCard/productCard'
-import {Link, useParams} from "react-router-dom"
-import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSort, faFilter} from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useEffect } from "react";
+import ProductCard from "../components/productCard/productCard";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 function productlistingFilter() {
-
   const selectedCategory = useParams();
-  console.log( 'this is',selectedCategory)
+  console.log("this is", selectedCategory);
   const [product, setProduct] = useState([]);
 
   const [sortOrder, setSortOrder] = useState("ascending");
 
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedOrigins, setSelectedOrigins] = useState([]);
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const handleBrandCheckboxChange = (event) => {
     const { value, checked } = event.target;
@@ -38,15 +37,13 @@ function productlistingFilter() {
 
   const handleMinPriceChange = (e) => {
     setMinPrice(e.target.value);
-  }
+  };
 
   const handleMaxPriceChange = (e) => {
     setMaxPrice(e.target.value);
-  }
+  };
 
   const applyFilters = () => {
-    // Apply filters based on selectedBrands and selectedOrigins
-    // Filter products based on the selected options
     let filteredProducts = product.filter((item) => {
       if (selectedBrands.length > 0 && !selectedBrands.includes(item.brand)) {
         return false;
@@ -58,11 +55,11 @@ function productlistingFilter() {
         return false;
       }
 
-      if (item.price < Number(minPrice)){
+      if (item.price < Number(minPrice)) {
         return false;
       }
 
-      if (item.price > Number(maxPrice)){
+      if (item.price > Number(maxPrice)) {
         return false;
       }
       return true;
@@ -75,24 +72,27 @@ function productlistingFilter() {
     setSelectedOrigins([]);
     fetchProducts();
   };
-  const baseURL = 'http://localhost:4000/api/items';
+  const baseURL = "http://localhost:4000/api/items";
 
-  const fetchProducts = async() => {
+  const fetchProducts = async () => {
     try {
       const response = await axios.get(baseURL);
-      const responsess = response.data
-      const selectedProduct = responsess.filter((item) =>  item.category.toLowerCase() === selectedCategory.category.toLowerCase());
+      const responsess = response.data;
+      const selectedProduct = responsess.filter(
+        (item) =>
+          item.category.toLowerCase() ===
+          selectedCategory.category.toLowerCase()
+      );
       setProduct(selectedProduct);
+    } catch (err) {
+      console.log(err);
     }
-    catch(err){console.log(err)};
-  }
+  };
 
   useEffect(() => {
     fetchProducts();
-  },
-  
-  []);
-  
+  }, []);
+
   const sortByPrice = () => {
     const sortedProducts = [...product];
     sortedProducts.sort((a, b) => {
@@ -206,7 +206,7 @@ function productlistingFilter() {
           <div className="flex flex-wrap">
             {product.map((item) => {
               return (
-                <div className="mx-4 my-6 w-[25vw] border-gray-600 border rounded-lg">
+                <div className="mx-4 my-6 w-[25vw] rounded-lg  shadow-md shadow-inner-md hover:mx-2 hover:my-2">
                   <ProductCard
                     productId={item._id}
                     firstImage={item.images[0]}
@@ -225,5 +225,4 @@ function productlistingFilter() {
   );
 }
 
-
-export default productlistingFilter
+export default productlistingFilter;

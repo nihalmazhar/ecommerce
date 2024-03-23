@@ -12,10 +12,10 @@ function productlisting() {
 
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedOrigins, setSelectedOrigins] = useState([]);
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
-  console.log(minPrice)
+  console.log(minPrice);
   const handleBrandCheckboxChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -36,11 +36,11 @@ function productlisting() {
 
   const handleMinPriceChange = (e) => {
     setMinPrice(e.target.value);
-  }
+  };
 
   const handleMaxPriceChange = (e) => {
     setMaxPrice(e.target.value);
-  }
+  };
 
   const applyFilters = () => {
     // Apply filters based on selectedBrands and selectedOrigins
@@ -56,11 +56,11 @@ function productlisting() {
         return false;
       }
 
-      if (item.price < Number(minPrice)){
+      if (item.price < Number(minPrice)) {
         return false;
       }
 
-      if (item.price > Number(maxPrice)){
+      if (item.price > Number(maxPrice)) {
         return false;
       }
 
@@ -107,7 +107,6 @@ function productlisting() {
   // const categoryItems = [...new Set(product.map((Val) => Val.category))];
   const brandItems = [...new Set(product.map((Val) => Val.brand))];
   const originItems = [...new Set(product.map((Val) => Val.origin))];
-  
 
   return (
     <div>
@@ -169,10 +168,10 @@ function productlisting() {
               <input
                 className="w-28 h-8 rounded-md"
                 type="number"
-                id='min'
+                id="min"
                 placeholder="Min"
-                min='1'
-                max='100000'
+                min="1"
+                max="100000"
                 value={minPrice}
                 onChange={handleMinPriceChange}
               />{" "}
@@ -180,11 +179,11 @@ function productlisting() {
               <input
                 className="w-28 h-8 rounded-md"
                 type="number"
-                id='max'
+                id="max"
                 placeholder="Max"
                 value={maxPrice}
-                min='2'
-                max='100000'
+                min="2"
+                max="100000"
                 onChange={handleMaxPriceChange}
               />
             </div>

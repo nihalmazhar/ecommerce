@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faSquareMinus } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Counter from "../components/Counter";
-const userID = "65b22d061092dc4cb467558d";
 import { ToastContainer, toast } from "react-toastify";
+import UserContext from "../Context/UserContext";
+import CartContext from "../Context/CartContext";
+
 
 function cart() {
-  const [myCart, setMyCart] = useState([]);
+  const {user} = useContext(UserContext);
+  const userID = user
+
+
+  const {setMyCart} = useContext(CartContext)
+  const {myCart} = useContext(CartContext)
+
+  console.log("thiscart", myCart)
+  if (!user || !myCart) return <div>Loading</div>;
 
   const fetchCart = async () => {
     const response = await axios.get(
@@ -20,7 +30,7 @@ function cart() {
 
   useEffect(() => {
     fetchCart();
-  }, [Counter]);
+  }, []);
 
   const orderAPI = async () => {
     await axios

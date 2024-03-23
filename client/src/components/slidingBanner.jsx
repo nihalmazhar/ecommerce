@@ -14,7 +14,7 @@ export default function SimpleSlider() {
   return (
     <Slider {...settings} className="">
       <div className="bg-red-900 w-screen h-[40vh]">
-        <h3>1</h3>
+        <img src="/src/assets/toyota banner.jpg" />
       </div>
       <div className="bg-blue-900 w-screen h-[40vh]">
         <h3>2</h3>
