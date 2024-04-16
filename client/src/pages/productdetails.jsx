@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,7 +16,7 @@ import UserContext from "../Context/UserContext";
 function productdetails() {
   const { user } = useContext(UserContext);
   const userID = user;
-  console.log('prod', userID)
+  console.log("prod", userID);
   if (!user) return <div>Loading</div>;
 
   const { itemId } = useParams();
@@ -40,10 +39,9 @@ function productdetails() {
   }, []);
 
   const selectedProduct = product.find((item) => item._id === itemId);
-  console.log('axios',userID)
+  console.log("axios", userID);
   const addToCart = async () => {
     try {
-      
       const response = await axios.post(
         `http://localhost:4000/api/cart/${userID}`,
         { productId: itemId, quantity: 1 }
@@ -103,9 +101,7 @@ function productdetails() {
           </div>
           <div className="flex justify-center">
             <div className="w-80">
-              <AddToCartButton 
-              productId={itemId}
-              userID={userID}/>
+              <AddToCartButton productId={itemId} userID={userID} />
             </div>
           </div>
         </div>

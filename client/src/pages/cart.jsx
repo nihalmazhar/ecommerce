@@ -8,16 +8,21 @@ import { ToastContainer, toast } from "react-toastify";
 import UserContext from "../Context/UserContext";
 import CartContext from "../Context/CartContext";
 
-
 function cart() {
-  const {user} = useContext(UserContext);
-  const userID = user
+  const { user } = useContext(UserContext);
+  const userID = user;
+
+  const {myCart, setMyCart } = useContext(CartContext);
+ 
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return (
+      <div className="h-80 flex justify-center items-center text-xl" > Log in to view your Cart <Link to={'/login'} ><button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 m-2 rounded-md ">Log In</button></Link></div>
+    )
+  }
 
 
-  const {setMyCart} = useContext(CartContext)
-  const {myCart} = useContext(CartContext)
-
-  console.log("thiscart", myCart)
+  console.log("thiscart", myCart);
   if (!user || !myCart) return <div>Loading</div>;
 
   const fetchCart = async () => {
@@ -50,17 +55,21 @@ function cart() {
       );
 
       fetchCart();
-        toast.info('Item removed from Cart')
-    } catch (err) {console.log(err)}
+      toast.info("Item removed from Cart");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const deleteCart = async (req,res) => {
-    const action = await axios.delete(`http://localhost:4000/api/cart/delete/${userID}`);
-    console.log(action.data)
+  const deleteCart = async (req, res) => {
+    const action = await axios.delete(
+      `http://localhost:4000/api/cart/delete/${userID}`
+    );
+    console.log(action.data);
     fetchCart();
-    
-  }
-
+  };
+  
+  
 
   if (myCart == "nothing found") {
     return (
@@ -72,13 +81,15 @@ function cart() {
   } else {
     return (
       <>
-      <ToastContainer position="bottom-center"
-      autoClose={2500}/>
+        <ToastContainer position="bottom-center" autoClose={2500} />
         <div className="m-4">
           <div className="flex justify-between">
             <div className="text-3xl font-semibold">My Cart</div>
             <div className="text-xl">
-              <button onClick={deleteCart} className="border-2 border-red-600 rounded-md p-1 hover:bg-red-600 hover:text-gray-100">
+              <button
+                onClick={deleteCart}
+                className="border-2 border-red-600 rounded-md p-1 hover:bg-red-600 hover:text-gray-100"
+              >
                 Delete Cart <FontAwesomeIcon icon={faTrashCan} />
               </button>
             </div>
@@ -86,37 +97,41 @@ function cart() {
 
           {myCart.items &&
             myCart.items.map((itemlist) => (
-              
-                <div key={itemlist._id} className="flex my-6 border ">
-                    <Link to={`/product-details/${itemlist.productId}`}>
-                    <div className="w-40 h-40  bg-slate-500 border-2">
-                      <img
-                        className="object-contain w-full h-full"
-                        src={itemlist.image}
+              <div key={itemlist._id} className="flex my-6 border ">
+                <Link to={`/product-details/${itemlist.productId}`}>
+                  <div className="w-40 h-40  bg-slate-500 border-2">
+                    <img
+                      className="object-contain w-full h-full"
+                      src={itemlist.image}
+                    />
+                  </div>
+                </Link>
+                <div className="flex flex-col justify-between">
+                  <div className="m-6 min-w-20">{itemlist.name}</div>
+                  <div className="flex justify-between w-[80vw] m-6">
+                    <div className="min-w-20">{itemlist.brand}</div>
+                    <div className="min-w-20">{itemlist.partNumber}</div>
+                    <div className="min-w-20">
+                      <Counter
+                        userID={userID}
+                        itemQuantity={itemlist.quantity}
+                        productId={itemlist.productId}
+                        
                       />
                     </div>
-                    </Link>
-                    <div className="flex flex-col justify-between">
-                      <div className="m-6 min-w-20">{itemlist.name}</div>
-                      <div className="flex justify-between w-[80vw] m-6">
-                        <div className="min-w-20">{itemlist.brand}</div>
-                        <div className="min-w-20">{itemlist.partNumber}</div>
-                        <div className="min-w-20">
-                          <Counter userID={userID}
-                          itemQuantity={itemlist.quantity}
-                          productId={itemlist.productId} />
-                        </div>
-                        <div className="min-w-20">₹{itemlist.price}</div>
-                        <div className="min-w-20">
-                          <button onClick={() => deleteCartItem(itemlist._id)} className="hover:text-red-600">
-                             <FontAwesomeIcon icon={faSquareMinus } size="xl" /> Remove
-                          </button>
-                        </div>
-                      </div>
+                    <div className="min-w-20">₹{itemlist.price}</div>
+                    <div className="min-w-20">
+                      <button
+                        onClick={() => deleteCartItem(itemlist._id)}
+                        className="hover:text-red-600"
+                      >
+                        <FontAwesomeIcon icon={faSquareMinus} size="xl" />{" "}
+                        Remove
+                      </button>
                     </div>
-                
+                  </div>
                 </div>
-              
+              </div>
             ))}
           <div className="flex justify-end items-center gap-x-4 my-6 p-4 bg-blue-300 rounded-sm">
             <div>Subtotal: ₹{myCart.bill}</div>

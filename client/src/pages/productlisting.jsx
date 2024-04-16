@@ -7,15 +7,15 @@ import { faSort, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 function productlisting() {
   const [product, setProduct] = useState([]);
-
   const [sortOrder, setSortOrder] = useState("ascending");
 
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedOrigins, setSelectedOrigins] = useState([]);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [minPrice, setMinPrice] = useState("1");
+  const [maxPrice, setMaxPrice] = useState("999999");
 
-  console.log(minPrice);
+  console.log(product);
+  
   const handleBrandCheckboxChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -43,8 +43,7 @@ function productlisting() {
   };
 
   const applyFilters = () => {
-    // Apply filters based on selectedBrands and selectedOrigins
-    // Filter products based on the selected options
+    
     let filteredProducts = product.filter((item) => {
       if (selectedBrands.length > 0 && !selectedBrands.includes(item.brand)) {
         return false;
@@ -72,6 +71,8 @@ function productlisting() {
   const clearFilters = () => {
     setSelectedBrands([]);
     setSelectedOrigins([]);
+    setMinPrice('1');
+    setMaxPrice('999999');
     fetchProducts();
   };
 
@@ -111,7 +112,7 @@ function productlisting() {
   return (
     <div>
       <div className="flex">
-        <div className="w-[15vw] h-screen mt-6 ml-4  rounded-sm bg-blue-300 flex flex-col p-2  ">
+        <div className="w-[15vw] min-h-screen max-h-[120vh] mt-6 ml-4  rounded-sm bg-blue-300 flex flex-col p-2  ">
           <div className="my-2 border-b-2 border-blue-900 h-min w-full font-medium text-blue-900">
             Filter <FontAwesomeIcon icon={faFilter} />
           </div>
@@ -126,6 +127,7 @@ function productlisting() {
                     <input
                       type="checkbox"
                       id={brand}
+                      checked={selectedBrands.includes(brand)}
                       value={brand}
                       onChange={handleBrandCheckboxChange}
                       className="mr-1"
@@ -148,6 +150,7 @@ function productlisting() {
                   <div className="text-xs">
                     <input
                       type="checkbox"
+                      checked={selectedOrigins.includes(origin)}
                       id={origin}
                       value={origin}
                       onChange={handleOriginCheckboxChange}

@@ -20,19 +20,16 @@ function Contact() {
         "http://localhost:4000/api/contactus",
         formData
       );
-      console.log("Message sent successfully:", response.data);
-      toast.info("Message sent successfully")
-      // Optionally, you can show a success message or reset the form here
+
+      toast.info("Message sent successfully");
     } catch (error) {
       console.error("Error sending message:", error);
-      // Optionally, you can show an error message to the user
     }
   };
 
   return (
     <section className="bg-white dark:bg-gray-900">
-      <ToastContainer position="bottom-center" autoClose={2500}
-        />
+      <ToastContainer position="bottom-center" autoClose={2500} />
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
           Contact Us

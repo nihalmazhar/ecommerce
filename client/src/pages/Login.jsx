@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../Context/UserContext";
+
 export default function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({});
   const [data, setData] = useState({ email: "", password: "" });
+  const [response, setResponse] = useState("");
+
+  const { user } = useContext(UserContext);
+  const token = localStorage.getItem("token");
+  if (token) {
+    navigate("/home");
+  }
 
   const handlechange = (e) => {
     const { id, value } = e.target;
@@ -19,14 +28,20 @@ export default function Login() {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    console.log('test',data)
+    console.log("test", data);
     axiosinst.post(BaseUrl, data, { withCredentials: true }).then((res) => {
       console.log(res);
-      console.log(res.data.message);
-      const token = res.data.token;
+      setResponse(res.data.message);
+      console.log(response);
+      setTimeout(() => {
+        setResponse("");
+      }, 5000);
 
-      localStorage.setItem("token", token);
-      navigate("/home");
+      if (res.data.success) {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        navigate("/home");
+      }
     });
   };
 
@@ -47,6 +62,13 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          {response && (
+            <div className="flex justify-center p-2 ">
+              <div className="bg-red-600 text-white p-2  rounded-md w-[40vw]">
+                {response}
+              </div>
+            </div>
+          )}
           <form className="space-y-6">
             <div>
               <label

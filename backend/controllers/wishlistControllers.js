@@ -6,7 +6,6 @@ module.exports.getListItems = async (req, res) => {
 
   try {
     const wishlist = await Wishlist.findOne({ userId });
-
     if (wishlist && wishlist.items.length > 0) {
       res.send(wishlist);
     } else {
@@ -20,7 +19,6 @@ module.exports.getListItems = async (req, res) => {
 module.exports.addListItems = async (req, res) => {
   const userId = req.params.id;
   const productId = req.body.productId;
-
   try {
     let wishlist = await Wishlist.findOne({ userId });
     let item = await Item.findOne({ _id: productId });
@@ -66,20 +64,14 @@ module.exports.addListItems = async (req, res) => {
 };
 
 module.exports.deleteListItems = async (req, res) => {
-  console.log(req.body);
   const userId = req.params.id;
   const productId = req.body.productId;
-  console.log(userId, productId);
   try {
     let wishlist = await Wishlist.findOne({ userId });
-    console.log(wishlist);
     let itemindex = wishlist.items.findIndex((p) => p.productId == productId);
 
-    console.log(itemindex);
     if (itemindex > -1) {
       let productitem = wishlist.items[itemindex];
-      console.log(productitem);
-
       wishlist.items.splice(itemindex, 1);
     }
 

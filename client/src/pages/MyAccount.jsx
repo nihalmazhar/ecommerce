@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 function MyAccount() {
   const [userID, setUserID] = useState();
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return (
+      <div className="h-80 flex justify-center items-center text-xl" > Log in to view your Account Details <Link to={'/login'} ><button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 m-2 rounded-md ">Log In</button></Link></div>
+    )
+  }
 
   const fetchUserId = async () => {
     const token = localStorage.getItem("token");

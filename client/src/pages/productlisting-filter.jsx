@@ -110,7 +110,6 @@ function productlistingFilter() {
   const categoryItems = [...new Set(product.map((Val) => Val.category))];
   const brandItems = [...new Set(product.map((Val) => Val.brand))];
   const originItems = [...new Set(product.map((Val) => Val.origin))];
-  console.log(categoryItems);
 
   return (
     <div>

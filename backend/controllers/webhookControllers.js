@@ -15,7 +15,6 @@ module.exports.webhook = async (request, response) => {
 
   try {
     event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-    console.log("done");
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;

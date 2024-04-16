@@ -5,23 +5,30 @@ import App from "./App.jsx";
 import UserContextProvider from "./Context/UserContextProvider.jsx";
 import CartContextProvider from "./Context/CartContextProvider.jsx";
 
-import Home from "./pages/home.jsx";
 import Login from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp.jsx";
-import Contact from "./pages/contact.jsx";
+import Home from "./pages/home.jsx";
 import Cart from "./pages/cart.jsx";
 import WishList from "./pages/wishlist.jsx";
+import Orders from "./pages/orders.jsx";
+import MyAccount from "./pages/MyAccount.jsx";
 import ProductList from "./pages/productlisting.jsx";
 import ProductlistingFilter from "./pages/productlisting-filter.jsx";
 import ProductDetails from "./pages/productdetails.jsx";
-import Orders from "./pages/orders.jsx";
+import Contact from "./pages/contact.jsx";
 import CheckoutSuccess from "./pages/checkoutSuccess.jsx";
+
 import Admin from "./pages/AdminPages/admin.jsx";
 import ProductAdd from "./pages/AdminPages/AddProduct.jsx";
 import EditProduct from "./pages/AdminPages/EditProduct.jsx";
 import SetBanners from "./pages/AdminPages/SetBanners.jsx";
 import CustomerSupport from "./pages/AdminPages/CustomerSupport.jsx";
-import MyAccount from "./pages/MyAccount.jsx";
+import ViewOrders from "./pages/AdminPages/ViewOrders.jsx";
+
+import Layout from "./Layouts/layout.jsx";
+import AuthLayout from "./Layouts/authLayout.jsx";
+import AdminPanelLayout from "./Layouts/AdminPanelLayout.jsx";
+
 import "./index.css";
 import {
   Route,
@@ -29,9 +36,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Layout from "./Layouts/layout.jsx";
-import AuthLayout from "./Layouts/authLayout.jsx";
-import AdminPanelLayout from "./Layouts/AdminPanelLayout.jsx";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
@@ -63,6 +68,7 @@ const router = createBrowserRouter(
           <Route path="addproduct" element={<ProductAdd />} />
           <Route path="editproduct" element={<EditProduct />} />
           <Route path="banners" element={<SetBanners />} />
+          <Route path="orders" element={<ViewOrders />} />
           <Route path="customer-support" element={<CustomerSupport />} />
       </Route>
     </Route>
@@ -73,10 +79,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     
      <UserContextProvider>
-      <CartContextProvider>
-        <RouterProvider router={router} />
-      
-    </CartContextProvider>
-    </UserContextProvider>
+        <CartContextProvider>
+         <RouterProvider router={router} />
+        </CartContextProvider>
+      </UserContextProvider>
   </React.StrictMode>
 );

@@ -1,9 +1,8 @@
-.slick-next:before, .slick-prev:before{
-    color: black;
+.slick-next:before,
+.slick-prev:before {
+  color: black;
 }
 
-
-
-.slick-list{
-    margin: 100px ;
+.slick-list {
+  margin: 100px;
 }

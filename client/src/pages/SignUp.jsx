@@ -1,6 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 export default function SignUp() {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({});
+  const [data, setData] = useState({ email: "", password: "" });
+  const [response, setResponse] = useState("");
+
+  const token = localStorage.getItem("token");
+  if (token) {
+    navigate("/home");
+  }
+
+  
+  const handlechange = (e) => {
+    const { id, value } = e.target;
+    setData((prev) => ({ ...prev, [id]: value }));
+  };
+  const BaseUrl = "http://localhost:4000/api/register";
+
+  const axiosinst = axios.create({
+    baseURL: BaseUrl,
+    withCredentials: true,
+  });
+
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+
+    await axiosinst
+      .post(BaseUrl, data, { withCredentials: true })
+      .then((res) => {
+        console.log("respnse", res);
+        setResponse(res.data.message);
+        console.log("state", response);
+        setTimeout(() => {
+          setResponse("");
+        }, 5000);
+
+        if (res.data.success) {
+          navigate("/login");
+        }
+      });
+  };
+
+  console.log("test3", data);
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -16,6 +61,13 @@ export default function SignUp() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          {response && (
+            <div className="flex justify-center p-2 ">
+              <div className="bg-red-600 text-white p-2  rounded-md w-[40vw]">
+                {response}
+              </div>
+            </div>
+          )}
           <form className="space-y-6" action="#" method="POST">
             <div>
               <label
@@ -29,6 +81,7 @@ export default function SignUp() {
                   id="email"
                   name="email"
                   type="email"
+                  onChange={handlechange}
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -50,6 +103,7 @@ export default function SignUp() {
                   id="password"
                   name="password"
                   type="password"
+                  onChange={handlechange}
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -59,6 +113,7 @@ export default function SignUp() {
 
             <div>
               <button
+                onClick={handlesubmit}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >

@@ -1,10 +1,7 @@
-import React from "react";
-
-import { useState } from "react";
-
+import React, { useState } from "react";
 import MyAccountDropdown from "./MyAccountDropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser,faBars } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 
 function MyAccount() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -30,8 +27,9 @@ function MyAccount() {
           className="fa-xl"
         />{" "}
         My Account
-        
-        <div className="absolute z-10 bg-blue-100 w-32 border-2 rounded ">{isDropdownVisible && <MyAccountDropdown />}</div>
+        <div className="absolute z-10 bg-blue-100 w-32 border-2 rounded ">
+          {isDropdownVisible && <MyAccountDropdown />}
+        </div>
       </div>
     </>
   );

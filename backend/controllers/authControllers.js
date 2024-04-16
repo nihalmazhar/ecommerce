@@ -11,44 +11,37 @@ const config = require("config");
 
 app.use(express.urlencoded({ extended: true }));
 
-
 module.exports.signUp = async (req, res) => {
   const { email, password } = req.body;
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    res.send("user already exists");
+    res.json({ success: false, message: "User already exists" });
     return;
   }
-
   const hash = await bcrypt.hash(password, 12);
   const user = new User({
     email,
     password: hash,
   });
   await user.save();
-  res.send("success");
+  res.json({ success: true, message: "SignUp Successful" });
 };
 
 module.exports.logIn = async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(email, password);
   try {
     const user = await User.findOne({ email });
-    
-
     if (!user) {
-      res.status(404).json({message:"user doesnt exist"});
+      res.json({ success: false, message: "User doesn't exist !!" });
       return;
     }
 
     const validpassword = await bcrypt.compare(password, user.password);
-
     if (validpassword) {
       const token = jwt.sign(user.toJSON(), config.get("jwtsecret"));
-      
-      res.json({token, message: 'login successful'})
-    }
-    else res.status(400).json({message:"invalid credentials"})
+      res.json({ token, message: "login successful", success: true });
+    } else res.json({ message: "Invalid credentials !!", success: false });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -56,9 +49,8 @@ module.exports.logIn = async (req, res) => {
 };
 
 module.exports.get_User = async (req, res) => {
-  
   const userId = req.user._id;
-  
+
   try {
     const user = await User.findById(userId).select("-password");
     if (!user) {

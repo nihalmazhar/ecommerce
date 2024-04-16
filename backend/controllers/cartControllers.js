@@ -3,14 +3,14 @@ const Item = require("../models/Product");
 
 module.exports.getCartItems = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId)
+
   try {
     let cart = await Cart.findOne({ userId });
     // if (!cart) {res.send('nothing is found')};
     if (cart && cart.items.length > 0) {
       res.send(cart);
     } else {
-      res.send('nothing found');
+      res.send("nothing found");
     }
   } catch (err) {
     console.log(err);
@@ -20,13 +20,11 @@ module.exports.getCartItems = async (req, res) => {
 
 module.exports.addCartItems = async (req, res) => {
   const userId = req.params.id;
-  console.log('userId', userId)
   const { productId, quantity } = req.body;
 
   try {
     let cart = await Cart.findOne({ userId });
-    let item = await Item.findOne({ _id:productId });
-
+    let item = await Item.findOne({ _id: productId });
     if (!item) {
       res.json("Item not found");
     }
@@ -38,16 +36,24 @@ module.exports.addCartItems = async (req, res) => {
     const image = item.images[0];
     if (cart) {
       let itemindex = cart.items.findIndex((p) => p.productId == productId);
-
       if (itemindex > -1) {
         let productitem = cart.items[itemindex];
         productitem.quantity += quantity;
         cart.items[itemindex] = productitem;
       } else {
-        try{
-          console.log(productId,quantity,price);
-          cart.items.push({productId:productId, name , quantity:quantity, price:price, brand, partNumber, image});}
-        catch (err){console.log(err , "failure")}
+        try {
+          cart.items.push({
+            productId: productId,
+            name,
+            quantity: quantity,
+            price: price,
+            brand,
+            partNumber,
+            image,
+          });
+        } catch (err) {
+          console.log(err, "failure");
+        }
       }
       cart.bill += quantity * price;
       cart = await cart.save();
@@ -65,17 +71,14 @@ module.exports.addCartItems = async (req, res) => {
   }
 };
 
-
 module.exports.editCartItems = async (req, res) => {
   const userId = req.params.id;
   const productId = req.body.productId;
   const quantity = req.body.quantity;
 
-  console.log(userId, productId, quantity)
-
   try {
-    let cart = await Cart.findOne({userId});
-    
+    let cart = await Cart.findOne({ userId });
+
     if (cart) {
       let itemindex = cart.items.findIndex((p) => p.productId == productId);
       if (itemindex > -1) {
@@ -84,38 +87,34 @@ module.exports.editCartItems = async (req, res) => {
         cart.items[itemindex] = productitem;
 
         let newBill = 0;
-            cart.items.forEach((item) => {
-                newBill += item.quantity * item.price;
-              });
-              cart.bill = newBill;
-      cart = await cart.save();
-      return res.status(201).send(cart);
+        cart.items.forEach((item) => {
+          newBill += item.quantity * item.price;
+        });
+        cart.bill = newBill;
+        cart = await cart.save();
+        return res.status(201).send(cart);
+      }
+    }
+  } catch (err) {
+    console.log(err);
   }
-     
-}
+};
 
-  }
-
-  catch(err){console.log(err)}
-}
 module.exports.deleteCartItems = async (req, res) => {
   const userId = req.params.id;
   const productId = req.body.productId;
 
-  console.log(userId, productId)
   try {
     let cart = await Cart.findOne({ userId });
-    console.log(cart)
     let itemindex = cart.items.findIndex((p) => p._id == productId);
-    console.log(itemindex)
+
     if (itemindex > -1) {
       let productitem = cart.items[itemindex];
-      console.log(productitem)
       cart.bill -= productitem.quantity * productitem.price;
       cart.items.splice(itemindex, 1);
+    } else {
+      console.log("This went wrong");
     }
-
-    else {console.log('This went wrong')}
 
     cart = await cart.save();
     return res.send(cart);
@@ -125,10 +124,8 @@ module.exports.deleteCartItems = async (req, res) => {
   }
 };
 
-module.exports.deleteEntireCart = async (req,res) => {
-
-  const userID = req.params.id
-
-  const deletedCart = await Cart.findOneAndDelete({userId:userID})
-  res.send("nothing found")
-}
+module.exports.deleteEntireCart = async (req, res) => {
+  const userID = req.params.id;
+  const deletedCart = await Cart.findOneAndDelete({ userId: userID });
+  res.send("nothing found");
+};

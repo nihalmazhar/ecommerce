@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
+import { CATEGORY_OPTIONS, ORIGIN_OPTIONS } from "../../dropdownOptions";
 function productAdd() {
   const baseURL = "http://localhost:4000/api/items";
 
@@ -10,19 +11,12 @@ function productAdd() {
     register,
     handleSubmit,
     formState: { errors },
-    control
+    control,
   } = useForm();
 
-  const CategoryOptions = [
-    { value: "Maintenance Service Parts", label: "Maintenance Service Parts" },
-    { value: "Belts, Chains and Rollers", label: "Belts, Chains and Rollers" },
-    { value: "Body", label: "Body" },
-  ];
+  const CategoryOptions = CATEGORY_OPTIONS;
 
-  const OriginOptions = [
-    {value:'OEM', label:'OEM'},
-    {value:"Aftermarket", label:'Aftermarket'}
-  ]
+  const OriginOptions = ORIGIN_OPTIONS;
 
   const onSubmit = async (data) => {
     const category = data.category.value;
@@ -32,20 +26,19 @@ function productAdd() {
       category: category,
       origin: origin,
     };
-    try{await axios.post(baseURL, newData);
-    console.log(data);
-    toast.success('Successfully added Product')}
-
-    catch(err){
-        console.log(err)
-        toast.error('Something went wrong')}
-  
+    try {
+      await axios.post(baseURL, newData);
+      console.log(data);
+      toast.success("Successfully added Product");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
     <>
-    <ToastContainer position="bottom-center" autoClose={2500}
-        />
+      <ToastContainer position="bottom-center" autoClose={2500} />
       <div className="productAddForm m-8">
         <h2 className="text-2xl font-semibold">Add New Product Details</h2>
         <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
@@ -78,27 +71,52 @@ function productAdd() {
                 required
               />
             </div>
+          </div>
+          <div className="flex gap-1">
             <div>
               <label name="cateogry" className="block">
                 Category*
               </label>
               <Controller
-                  control={control}
-                  name="category"
-                  render ={ ({field}) => (<Select
-                className="rounded-md min-w-80"
-                type="text"
+                control={control}
                 name="category"
-                id="category"
-                options={CategoryOptions}
-                {...field}
-                placeholder="Enter Product category"
-                required
-              />)}
+                render={({ field }) => (
+                  <Select
+                    className="rounded-md min-w-80"
+                    type="text"
+                    name="category"
+                    id="category"
+                    options={CategoryOptions}
+                    {...field}
+                    placeholder="Enter Product category"
+                    required
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <label name="origin" className="block">
+                Origin*
+              </label>
+              <Controller
+                className="pb-6"
+                control={control}
+                name="origin"
+                render={({ field }) => (
+                  <Select
+                    className="rounded-md pb-6"
+                    type="text"
+                    name="origin"
+                    id="origin"
+                    options={OriginOptions}
+                    {...field}
+                    placeholder="Enter Product Origin"
+                    required
+                  />
+                )}
               />
             </div>
           </div>
-
           <div>
             <label name="description" className="block">
               Description*
@@ -200,26 +218,7 @@ function productAdd() {
                 required
               />
             </div>
-            <div>
-              <label name="origin" className="block">
-                Origin*
-              </label>
-              <Controller
-              className='pb-6'
-              control={control}
-              name="origin"
-              render= {({field}) => (<Select
-                className="rounded-md pb-6"
-                type="text"
-                name="origin"
-                id="origin"
-                options={OriginOptions}
-                {...field}
-                placeholder="Enter Product Origin"
-                required
-              />)}
-              />
-            </div>
+
             <div>
               <label name="partNumber" className="block">
                 Part Number*

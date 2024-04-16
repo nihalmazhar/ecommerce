@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import ProductCard from "../components/productCard/productCard";
 import AddToCartButton from "../components/addToCartButton";
 import DeleteButton from "../components/deleteButton";
@@ -10,6 +10,14 @@ import UserContext from "../Context/UserContext";
 function wishlist() {
   const { user } = useContext(UserContext);
   const userID = user;
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return (
+      <div className="h-80 flex justify-center items-center text-xl" > Log in to view your Wish List <Link to={'/login'} ><button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 m-2 rounded-md ">Log In</button></Link></div>
+    )
+  }
+
   if (!user) return <div>Loading</div>;
 
   const [myWishlist, setMyWishlist] = useState([]);

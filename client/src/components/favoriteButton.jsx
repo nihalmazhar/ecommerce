@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as Solidheart } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +24,6 @@ function favoriteButton({ productId, userId }) {
       const response = await axios.get(
         `http://localhost:4000/api/wishlist/${userId}`
       );
-      console.log("response", response.data.items);
 
       if (response.data.items.some((item) => item.productId === productId)) {
         setIsFavorites(true);
